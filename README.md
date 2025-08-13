@@ -65,4 +65,89 @@ If `/etc/resolv.conf` keeps getting deleted/overwritten:
 
 ---
 
-Save this as a **TXT** or **MD** file for future reference. Let me know if you need further adjustments!
+-----------------------------------------------------------------------------------------------------------------------------------
+Here’s a structured document for troubleshooting Jenkins startup issues and starting Tomcat:
+
+---
+
+# **Troubleshooting Jenkins Startup & Starting Tomcat**
+
+## **1. Fixing Jenkins Startup Failure**
+
+If Jenkins fails to start, follow these steps:
+
+### **Commands to Restart Jenkins**
+```bash
+# Reset failed state (if Jenkins was marked as failed)
+sudo systemctl reset-failed jenkins
+
+# Reload systemd to apply changes
+sudo systemctl daemon-reload
+
+# Start Jenkins
+sudo systemctl start jenkins
+
+# Check Jenkins status (Note: Case-sensitive, use 'jenkins' not 'Jenkins')
+sudo systemctl status jenkins
+```
+
+### **Common Issues & Fixes**
+- **Permission Issues:**  
+  Ensure Jenkins has access to its directories:
+  ```bash
+  sudo chown -R jenkins:jenkins /var/lib/jenkins
+  ```
+- **Port Conflicts:**  
+  Check if port `8080` (default Jenkins port) is free:
+  ```bash
+  sudo netstat -tulnp | grep 8080
+  ```
+
+### **Logs for Debugging**
+```bash
+sudo journalctl -u jenkins -xe  # View detailed logs
+```
+
+---
+
+## **2. Starting Apache Tomcat**
+
+To start Tomcat manually (e.g., `apache-tomcat-9.0.108`):
+
+### **Command**
+```bash
+sh apache-tomcat-9.0.108/bin/startup.sh
+```
+
+### **Verify Tomcat is Running**
+```bash
+curl http://localhost:8080  # Default Tomcat port
+# OR
+ps aux | grep tomcat
+```
+
+### **Stopping Tomcat**
+```bash
+sh apache-tomcat-9.0.108/bin/shutdown.sh
+```
+
+---
+
+## **Summary Table**
+| **Service** | **Action**               | **Command**                                  |
+|-------------|--------------------------|---------------------------------------------|
+| **Jenkins** | Reset & Start            | `sudo systemctl start jenkins`              |
+|             | Check Status             | `sudo systemctl status jenkins`             |
+| **Tomcat**  | Start                    | `sh tomcat/bin/startup.sh`                  |
+|             | Stop                     | `sh tomcat/bin/shutdown.sh`                 |
+
+---
+
+### **Notes**
+- Replace `apache-tomcat-9.0.108` with your actual Tomcat directory.
+- For **systemd-managed Tomcat**, use:
+  ```bash
+  sudo systemctl start tomcat  # If installed as a service
+  ```
+
+
