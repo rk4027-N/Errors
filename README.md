@@ -1,7 +1,3 @@
-Here’s a formatted document for the solution to the "Failed to connect to repository" error due to DNS resolution issues:
-
----
-
 # **Fix: "Could not resolve host: github.com" in Jenkins/Git**
 
 ## **Error Description**  
@@ -62,11 +58,6 @@ If `/etc/resolv.conf` keeps getting deleted/overwritten:
 - **Issue:** DNS resolution failure preventing Git/Jenkins from accessing GitHub.  
 - **Fix:** Configure `/etc/resolv.conf` with valid nameservers.  
 - **Verification:** Test connectivity using `ping` or `curl`.  
-
----
-
------------------------------------------------------------------------------------------------------------------------------------
-Here’s a structured document for troubleshooting Jenkins startup issues and starting Tomcat:
 
 ---
 
